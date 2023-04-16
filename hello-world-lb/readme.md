@@ -34,9 +34,38 @@ The docker-compose.yml file defines the services that will be used to run the ap
 
     - Mount the "app1.py" and "app2.py" files onto the "app1" and "app2" containers, respectively, which are running the "myapp" image with a Flask application. This allows us to customize the message in the container of Flask server, without having to rebuild the image each time we make a change to the code.
 
+docker-compose.yml
+```
+version: '3.9'
+
+services:
+  lb:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app1
+      - app2
+  app1:
+    image: myapp
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./app1.py:/app/app.py
+  app2:
+    image: myapp
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./app2.py:/app/app.py
+```
+
 **Flask Application**
 The myapp Flask application returns a custom message.  By default, the app listens on port 8000 for incoming requests using the "app.py" file, and it will return the message "Hello, World!":
 
+app.py
 ```
 from flask import Flask
 
@@ -91,7 +120,7 @@ The server block defines a virtual server that listens on port 80. The location 
 
 The proxy_set_header directives are used to set HTTP headers in the forwarded request.:
 
-
+nginx.conf
 ```
 worker_processes 1;
 
