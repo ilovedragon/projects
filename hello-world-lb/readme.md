@@ -27,10 +27,15 @@ The code in this repository uses Docker Compose to deploy two instances of a cus
 The docker-compose.yml file defines the services that will be used to run the application, including:
 
 1. The lb service, which uses the Nginx image as the load balancer and maps port 80 on the host to port 80 in the container. The nginx.conf file is mounted as a volume to configure the load balancer.
-3. The app1 and app2 services, which use the myapp image and map port 8001 and 8002 on the host to port 8000 in the container, respectively. The app1.py and app2.py files are used to create a custom message in the container of Flask server.
+2. The app1 and app2 services, which use the myapp image and map port 8001 and 8002 on the host to port 8000 in the container, respectively. The app1.py and app2.py files are used to create a custom message in the container of Flask server.
+3. Volumes allow the containers to share data with the host or with other containers, and that in this particular Docker Compose file, volumes are used to:
+
+    - Mount the "nginx.conf" file onto the "lb" container, which is running the Nginx image as a load balancer. This allows us to customize the configuration of the load balancer without having to modify the image itself.
+
+    - Mount the "app1.py" and "app2.py" files onto the "app1" and "app2" containers, respectively, which are running the "myapp" image with a Flask application. This allows us to customize the message in the container of Flask server, without having to rebuild the image each time we make a change to the code.
 
 **Flask Application**
-The myapp Flask application consists of a single route that returns a custom message. The default app.py file defines the Flask app and listens on port 8000 for incoming requests:
+The myapp Flask application returns a custom message.  By default, the app listens on port 8000 for incoming requests using the "app.py" file, and it will return the message "Hello, World!":
 
 ```
 from flask import Flask
@@ -45,7 +50,35 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
 ``` 
 
-app1.py, app2.py replace this default app.py files, to customize the text.
+However, you can customize the text by creating two additional files: "app1.py" and "app2.py". "app1.py" will return the message "Hello, World 1!", while "app2.py" will return the message "Hello, World 2!".
+
+app1.py:
+```
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello, World 1!'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+``` 
+
+app2.py:
+```
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello, World 2!'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+``` 
 
 **Nginx Configuration**
 The nginx.conf file is a configuration file for Nginx, a popular web server and reverse proxy. The first line sets the number of worker processes to 1, and the events block specifies that each worker process can handle up to 1024 connections.
