@@ -20,7 +20,7 @@ The code in this repository uses Docker Compose to deploy two instances of a cus
 2. app1.py and app2.py will display hello world 1 or 2 in container based on myapp image.
 3. nginx.conf configure the load balancer
 4. docker compose up -d
-5. This will start all the services and the load balancer will be accessible at http://localhost. When you access http://localhost/app1, you should see the "Hello World 1!" message, and when you access http://localhost/app2, you should see the "Hello World 2!" message.!"
+5. This will start all the services and the load balancer will be accessible at http://localhost. When you access http://localhost/, you should see the "Hello World 1!" message, and when you refresh http://localhost/ again, you should see the "Hello World 2!" message.!"
 
 ## **Code Explanation**
 **Docker Compose**
