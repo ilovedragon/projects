@@ -81,7 +81,9 @@ if __name__ == '__main__':
 ``` 
 
 **Nginx Configuration**
-The nginx.conf file is a configuration file for Nginx, a popular web server and reverse proxy. The first line sets the number of worker processes to 1, and the events block specifies that each worker process can handle up to 1024 connections.
+The nginx.conf file is a configuration file for Nginx, we are using Nginx here as both a reverse proxy and a load balancer.
+
+The first line sets the number of worker processes to 1, and the events block specifies that each worker process can handle up to 1024 connections.
 
 The http block contains the main configuration for the HTTP server. In this configuration, an upstream block is defined, which specifies a list of backends that Nginx can use to distribute traffic. In this case, the upstream block specifies two servers: app1:8000 and app2:8000. The configuration uses a simple round-robin algorithm to distribute traffic evenly between the services.
 
