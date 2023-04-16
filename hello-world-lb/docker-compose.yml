@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  lb:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app1
+      - app2
+  app1:
+    image: myapp
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./app1.py:/app/app.py
+  app2:
+    image: myapp
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./app2.py:/app/app.py
+
