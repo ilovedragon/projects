@@ -2,7 +2,7 @@
 
 # **Overview**
 
-The code in this repository uses Docker Compose to deploy two instances of a custom Flask application, each with a unique message, and an Nginx load balancer to route traffic between them. The load balancer is configured to return a custom response based on the URI path of the request, displaying the appropriate message for the app instance.
+This repository contains a Docker Compose configuration file that deploys a custom Flask application in two backend instances, and an Nginx load balancer to distribute incoming traffic between these two backend instances. The load balancer is set up to route incoming requests to one of the backend instances in a round-robin manner.
 
 # **Prerequisites**
 1. Before you begin, you will need to have Docker and Docker Compose installed on your system.
