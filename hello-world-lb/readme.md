@@ -1,4 +1,4 @@
-**Task**: Create a docker compose file to have two hello-world container, one will display hello-world1 another will show hello-world2. Add another load-balancer, so that whenever we point to http://localhost, first will display hello-world1, another will show hellp-world2
+**Task**: Create a Docker Compose file that contains two containers that display "hello-world 1" and "hello-world 2", respectively. Add a load balancer to ensure that when we access "http://localhost", the traffic is distributed between the two containers in a round-robin fashion, so that the first request is sent to "hello-world1", the second to "hello-world 2", the third to "hello-world 1" again, and so on.
 
 # **Overview**
 
